@@ -96,13 +96,13 @@ sub Get_Vm {
     return $vm_config;
 }
 
-sub Add_Disabled_Vm {
+sub Add_Enabled_Vm {
     my ($self, $vm, $server, $comment) = @_;
 
     open(VM_CONF,">>" . $self->{_filename}) || croak("Cannot Open File");
     printf VM_CONF "\n[%s@%s]\n", $vm, $server;
     print VM_CONF ";$_\n" foreach(split '\n', $comment);
-    print VM_CONF "enabled = 0\n";
+    print VM_CONF "enabled = 1\n";
     close(VM_CONF);
 
     #reload config

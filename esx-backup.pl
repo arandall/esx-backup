@@ -27,7 +27,7 @@ foreach (@{$config->Get_Servers()}) {
         Pass => $_->{pass},
     );
     
-    $logger->info(sprintf("Perorming backup on %s", $host));
+    $logger->info(sprintf("Performing backing up %s", $host));
     
     my $vm_list = $ssh->Get_Vm_List($host);
     
@@ -39,8 +39,7 @@ foreach (@{$config->Get_Servers()}) {
         # does vm exist in config?
         if (!%{$vm_backup_config}) {
             my $warning_string = sprintf(
-                "New virtual machine '%s' on host '%s' found,"
-                . " added to config as DISABLED\n"
+                "New virtual machine '%s' on host '%s' found, adding to config.\n"
                 , $vm->{name}
                 , $host
             );
@@ -49,7 +48,7 @@ foreach (@{$config->Get_Servers()}) {
             $logger->warn($warning_string);
             
             # Disable will also add if not already in config.
-            $config->Add_Disabled_Vm($vm->{name}, $host, $vm->{comment});
+            $config->Add_Enabled_Vm($vm->{name}, $host, $vm->{comment});
             next;
         }
     
