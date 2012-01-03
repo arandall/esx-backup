@@ -53,7 +53,7 @@ foreach (@{$config->Get_Servers()}) {
         }
     
         # do we need to backup?
-        my @week_days = qw(sun mon tue wed thr fri sat);
+        my @week_days = qw(sun mon tue wed thu fri sat);
         my ($sec, $min, $hr, $day, $month, $year, $weekday, $dayofyr, $junk_yuk) = localtime(time);
         
         if (!$vm_backup_config->{enabled}) {
