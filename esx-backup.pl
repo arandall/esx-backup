@@ -17,9 +17,9 @@ Log::Log4perl::init_and_watch($config->Get_Log_Config_File(), 30 );
 
 
 
-my @backups_to_preform = ();
 
 foreach (@{$config->Get_Servers()}) {
+    my @backups_to_preform = ();
     my $host = $_->{host};
     my $ssh = ESX::SSH->new(
         Host => $host,
@@ -64,11 +64,12 @@ foreach (@{$config->Get_Servers()}) {
                     $host
                 )
             );
-        } elsif (grep ! /^$week_days[$weekday]$/, @{$vm_backup_config->{backup_days}}) {
+        } elsif (!grep /^$week_days[$weekday]$/, @{$vm_backup_config->{backup_days}}) {
             $logger->info(
                 sprintf(
-                    "Skipping vm '%s' as its only backed up on '%s'", 
+                    "Skipping vm '%s' as its %s and is only backed up on '%s'", 
                     $vm->{name}, 
+                    $week_days[$weekday],
                     join ",", @{$vm_backup_config->{backup_days}},
                 )
             );
